@@ -1,8 +1,29 @@
-body { font-family: Arial, sans-serif; text-align: center; }
+body { font-family: Arial, sans-serif; text-align: center; padding: 10px; }
+h1 { font-size: 2.5em; color: #333; }
+label, select, button { margin: 10px; font-size: 1.2em; }
+button.styled-button {
+    padding: 12px 20px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+}
+button.styled-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
 #calendars { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-.calendar-container { border: 2px solid #000; padding: 10px; border-radius: 10px; background-color: #f9f9f9; }
-.calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 300px; margin: auto; }
-.day { padding: 10px; border: 1px solid #ddd; cursor: pointer; }
+.calendar-container { border: 2px solid #000; padding: 15px; border-radius: 10px; background-color: #f9f9f9; width: 100%; max-width: 400px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); }
+.calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 350px; margin: auto; }
+.day { padding: 12px; border: 1px solid #ddd; cursor: pointer; font-size: 1.1em; }
 .today { background-color: gold; font-weight: bold; }
 .current-month { border: 3px solid red; }
 .holiday { background-color: lightgreen; font-weight: bold; }
+@media (max-width: 600px) {
+    .calendar-container { width: 90%; }
+    .calendar { grid-template-columns: repeat(7, minmax(30px, 1fr)); }
+    .day { padding: 8px; font-size: 1em; }
+}
