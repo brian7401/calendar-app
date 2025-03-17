@@ -23,15 +23,26 @@ const fetchUserCountry = async () => {
 
 const populateCountrySelector = async () => {
     const selector = document.getElementById("country-selector");
+    const searchInput = document.getElementById("country-search");
     try {
         const response = await fetch("https://date.nager.at/api/v3/AvailableCountries");
-        const countries = await response.json();
-        countries.forEach(country => {
-            const option = document.createElement("option");
-            option.value = country.countryCode;
-            option.textContent = country.name;
-            selector.appendChild(option);
-        });
+        let countries = await response.json();
+        countries.sort((a, b) => a.name.localeCompare(b.name));
+        
+        const updateDropdown = (filter = "") => {
+            selector.innerHTML = "";
+            countries.forEach(country => {
+                if (country.name.toLowerCase().includes(filter.toLowerCase())) {
+                    const option = document.createElement("option");
+                    option.value = country.countryCode;
+                    option.textContent = country.name;
+                    selector.appendChild(option);
+                }
+            });
+        };
+        
+        searchInput.addEventListener("input", () => updateDropdown(searchInput.value));
+        updateDropdown();
     } catch (error) {
         console.error("Error fetching country list:", error);
     }
@@ -72,25 +83,41 @@ const generateCalendars = async (country) => {
             const holiday = holidays.find(h => new Date(h.date).getMonth() === month && new Date(h.date).getDate() === day);
             if (holiday) {
                 div.classList.add("holiday");
-                div.setAttribute("title", holiday.localName);
+                div.onclick = () => showPopup(holiday.localName, holiday.date);
             }
             
             calendar.appendChild(div);
         }
-        
         calendarContainer.appendChild(calendar);
         calendarsContainer.appendChild(calendarContainer);
     }
 };
 
-const updateCountry = () => {
-    const selectedCountry = document.getElementById("country-selector").value;
-    generateCalendars(selectedCountry);
+const showPopup = (holidayName, holidayDate) => {
+    const popup = document.getElementById("holiday-popup");
+    const popupTitle = document.getElementById("popup-title");
+    const popupDate = document.getElementById("popup-date");
+    
+    popupTitle.textContent = holidayName;
+    popupDate.textContent = `Date: ${holidayDate}`;
+    
+    popup.classList.add("show");
 };
 
-(async () => {
+const closePopup = () => {
+    document.getElementById("holiday-popup").classList.remove("show");
+};
+
+document.getElementById("popup-close").addEventListener("click", closePopup);
+
+document.addEventListener("DOMContentLoaded", async () => {
     await populateCountrySelector();
     const userCountry = await fetchUserCountry();
     document.getElementById("country-selector").value = userCountry;
     generateCalendars(userCountry);
-})();
+});
+
+const updateCountry = () => {
+    const selectedCountry = document.getElementById("country-selector").value;
+    generateCalendars(selectedCountry);
+};

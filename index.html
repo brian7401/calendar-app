@@ -8,10 +8,20 @@
 </head>
 <body>
     <h1>World Celebration Calendar</h1>
+    <input type="text" id="country-search" placeholder="Search for a country...">
     <label for="country-selector">Select a country:</label>
     <select id="country-selector"></select>
     <button class="styled-button" onclick="updateCountry()">Load Holidays</button>
     <div id="calendars"></div>
+    
+    <div id="holiday-popup" class="popup">
+        <div class="popup-content">
+            <span id="popup-close" class="close">&times;</span>
+            <h2 id="popup-title"></h2>
+            <p id="popup-date"></p>
+        </div>
+    </div>    
+    
     <script src="script.js"></script>
 </body>
 </html>
