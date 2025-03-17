@@ -1,26 +1,8 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-
-.calendar { display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    max-width: 300px;
-    margin: auto;
-}
-
-.day {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.today {
-    background-color: gold;
-    font-weight: bold;
-}
-
-.holiday {
-    background-color: lightgreen;
-    font-weight: bold;
-}
+body { font-family: Arial, sans-serif; text-align: center; }
+#calendars { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.calendar-container { border: 2px solid #000; padding: 10px; border-radius: 10px; background-color: #f9f9f9; }
+.calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 300px; margin: auto; }
+.day { padding: 10px; border: 1px solid #ddd; cursor: pointer; }
+.today { background-color: gold; font-weight: bold; }
+.current-month { border: 3px solid red; }
+.holiday { background-color: lightgreen; font-weight: bold; }
